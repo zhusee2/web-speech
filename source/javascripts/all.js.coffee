@@ -8,10 +8,22 @@ document.addEventListener 'DOMContentLoaded', ->
 
   return unless window.speechSynthesis?
 
-  window.setTimeout ->
-    # Voices list not available yet at the time of DOMContentLoaded
-    voicesList = window.speechSynthesis.getVoices()
-    voicesArray = Array::slice.call(voicesList)
+  getVoicesArray = ->
+    # Voices list returns empty array when:
+    # 1. DOMContentLoaded just fired
+    # 2. Randomly on iOS 8 :(
+    new Promise (resolve, reject) ->
+      rejectTimeout = window.setTimeout (-> reject("timeout")), 5000
+
+      do fetchList = ->
+        if (voicesList = window.speechSynthesis.getVoices()) and voicesList.length
+          window.clearTimeout(rejectTimeout)
+          resolve(Array::slice.call(voicesList))
+        else
+          window.setTimeout(fetchList, 300)
+
+  # Get available voices
+  getVoicesArray().then (voicesArray) ->
     filteredVoices = voicesArray.filter (voice) -> voice.lang.match(/^zh/)
 
     # Removes loading placeholder
@@ -23,12 +35,15 @@ document.addEventListener 'DOMContentLoaded', ->
       optionNode.text = "#{voice.name} (#{voice.lang})"
       optionNode.value = index
       voiceSelect.appendChild(optionNode)
-  , 500
+  .catch ->
+    voiceSelect.querySelector('option[placeholder]').text = "Default zh-TW"
 
   speechButton.addEventListener 'click', (event) ->
     contentText = speechInput.value
     contentText.replace(/\n/, ',')
     utterancce = new SpeechSynthesisUtterance(contentText)
     utterancce.voice = voice if voice = filteredVoices[voiceSelect.value]
+    utterancce.rate = 0.5
+    utterancce.lang = "zh-TW" unless utterancce.voice?
 
     window.speechSynthesis.speak(utterancce)
