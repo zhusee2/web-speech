@@ -49,3 +49,6 @@ document.addEventListener 'DOMContentLoaded', ->
     utterancce.lang = "zh-TW" unless utterancce.voice?
 
     window.speechSynthesis.speak(utterancce)
+
+window.addEventListener 'unload', (event) ->
+  window.speechSynthesis.cancel()  # stops any speech when about to leave
