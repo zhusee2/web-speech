@@ -57,9 +57,10 @@ activate :deploy do |deploy|
   deploy.method = :git
 end
 
+activate :autoprefixer
+
 # Build-specific configuration
 configure :build do
-  activate :autoprefixer
 
   activate :minify_css
   activate :minify_javascript

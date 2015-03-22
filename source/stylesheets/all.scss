@@ -1,5 +1,26 @@
 @charset "utf-8";
 
+@mixin appearance($value) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  -ms-appearance: $value;
+  -o-appearance: $value;
+  appearance: $value;
+}
+
+// Only display content to screen readers.
+// Ref: http://git.io/hyAE (bootstrap)
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 html, body {
   height: 100%;
 }
@@ -30,22 +51,58 @@ body {
   font-weight: 300;
   text-align: center;
   border: none;
-  appearance: none;
   outline: none;
   flex: 10 0;
+  @include appearance(none);
 }
 .speech-actions {
   flex: 0 0 50px;
 
+  & > * + * {
+    margin-left: 0.5em;
+  }
+
+  label, button {
+    box-shadow: 0 1px 0 transparentize(black, .75),
+                0 1px 0 transparentize(white, .75) inset;
+
+    &:active {
+      outline: none;
+      box-shadow: 0 1px 0 transparentize(black, .75) inset,
+                  0 1px 0 transparentize(white, .75);
+    }
+  }
   select, button {
     height: 50px;
   }
 
-  select {
-    min-width: 200px;
-    background: none;
+  label {
+    color: darken(#7f8c8d, 15%);
+    text-shadow: 0 1px 0 white;
     border: 1px solid #95a5a6;
-    margin-right: 1em;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+
+    select {
+      min-width: 15em;
+      background: none;
+      border: none;
+      padding: 0 2.5em;
+      @include appearance(none);
+    }
+
+    .icon-left, .icon-right {
+      pointer-events: none;
+      position: absolute;
+      top: (52px - 16px)/2;
+    }
+    .icon-left {
+      left: 0.5em;
+    }
+    .icon-right {
+      right: 0.5em;
+    }
   }
 
   button {

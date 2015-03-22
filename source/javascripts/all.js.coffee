@@ -27,6 +27,7 @@ document.addEventListener 'DOMContentLoaded', ->
   # Get available voices
   getVoicesArray().then (voicesArray) ->
     filteredVoices = voicesArray.filter (voice) -> voice.lang.match(/^zh/)
+    filteredVoices.sort (voice) -> if voice.lang.match(/tw$/i) then -1 else 1
 
     # Removes loading placeholder
     Array::forEach.call voiceSelect.children, (node) -> node.remove()

@@ -9,9 +9,15 @@ title: Web Speech
 白冰冰請白冰冰白冰冰的冰</textarea>
 
   <div class="speech-actions">
-    <select name="voice" id="voice-select" disabled>
-      <option value="" placeholder>正在載入語音清單⋯⋯</option>
-    </select>
+    <label>
+      <i class="fa fa-fw fa-microphone icon-left"></i>
+      <span class="sr-only">選擇語音</span>
+      <select name="voice" id="voice-select" disabled>
+        <option value="" placeholder>正在載入語音清單⋯⋯</option>
+      </select>
+      <i class="fa fa-fw fa-caret-down icon-right"></i>
+    </label>
+
     <button type="button" id="speech-button">念出來吧！</button>
   </div>
 </div><!-- .welcome -->
