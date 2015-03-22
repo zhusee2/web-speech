@@ -3,6 +3,9 @@
 $base-size: 16px;
 $break-point: 600px;
 
+$peter-river: #3498db;
+$belize-hole: #2980b9;
+
 @function relative-size($target, $base: $base-size) {
   @return ($target / $base) * 1em;
 }
@@ -45,13 +48,38 @@ body {
   }
 }
 
+.compatibility-message {
+  width: 100%;
+  max-width: 21em;
+  font-size: 150%;
+  line-height: 1.5;
+  font-weight: 300;
+  text-align: center;
+  margin: auto;
+
+  .synthesis-supported & {
+    display: none;
+  }
+
+  a {
+    color: $peter-river;
+  }
+  a:hover, a:focus, a:active {
+    color: $belize-hole;
+  }
+}
+
 .container {
   width: 100%;
   height: 85%;
   text-align: center;
   margin: auto 1em;
-  display: flex;
   flex-direction: column;
+  display: none;
+
+  .synthesis-supported & {
+    display: flex;
+  }
 
   @media (min-width: $break-point) {
     width: 90%;
@@ -138,18 +166,17 @@ body {
   }
 
   button {
-    $theme: #3498db;
-    background-color: $theme;
+    background-color: $peter-river;
     color: white;
-    border: 1px solid #2980b9;
+    border: 1px solid $belize-hole;
     border-radius: 4px;
     padding: 0 1em;
 
     &:hover, &:focus {
-      background-color: mix($theme, white, 90%);
+      background-color: mix($peter-river, white, 90%);
     }
     &:active {
-      background-color: mix($theme, black, 90%);
+      background-color: mix($peter-river, black, 90%);
     }
 
     @media (min-width: $break-point) {

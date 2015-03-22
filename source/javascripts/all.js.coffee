@@ -25,6 +25,9 @@ document.addEventListener 'DOMContentLoaded', ->
         else
           window.setTimeout(fetchList, 300)
 
+  # Add class to body so to hide compatibility message
+  document.body.classList.add('synthesis-supported')
+
   # Get available voices
   getVoicesArray().then (voicesArray) ->
     filteredVoices = voicesArray.filter (voice) -> voice.lang.match(/^zh/)
