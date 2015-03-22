@@ -106,11 +106,16 @@ body {
     display: inline-block;
     position: relative;
 
+    &:hover, &:focus {
+      background-color: transparentize(white, .8);
+    }
+
     select {
       width: 12em;
       background: none;
       border: none;
       padding: 0 2.5em;
+      cursor: pointer;
       @include appearance(none);
 
       @media (min-width: $break-point) {
@@ -133,11 +138,19 @@ body {
   }
 
   button {
-    background-color: #3498db;
+    $theme: #3498db;
+    background-color: $theme;
     color: white;
     border: 1px solid #2980b9;
     border-radius: 4px;
     padding: 0 1em;
+
+    &:hover, &:focus {
+      background-color: mix($theme, white, 90%);
+    }
+    &:active {
+      background-color: mix($theme, black, 90%);
+    }
 
     @media (min-width: $break-point) {
       padding: 0 2em;
