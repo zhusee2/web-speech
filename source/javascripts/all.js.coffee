@@ -1,5 +1,7 @@
 #= require_tree .
 
+iOSClient = navigator.userAgent.match(/iPhone|iPad/)
+
 document.addEventListener 'DOMContentLoaded', ->
   speechInput = document.querySelector('#speech-input')
   speechButton = document.querySelector('#speech-button')
@@ -43,7 +45,7 @@ document.addEventListener 'DOMContentLoaded', ->
     contentText.replace(/\n/, ',')
     utterancce = new SpeechSynthesisUtterance(contentText)
     utterancce.voice = voice if voice = filteredVoices[voiceSelect.value]
-    utterancce.rate = 0.5
+    utterancce.rate = if iOSClient then 0.4 else 1.2 # it speaks much faster on iOS
     utterancce.lang = "zh-TW" unless utterancce.voice?
 
     window.speechSynthesis.speak(utterancce)
