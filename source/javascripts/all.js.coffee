@@ -1,4 +1,5 @@
 #= require_tree .
+#= require_self
 
 iOSClient = navigator.userAgent.match(/iPhone|iPad/)
 
